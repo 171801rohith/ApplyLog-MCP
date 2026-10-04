@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "applylog"
+version = "0.1.0"
+description = "Local placement/job-application tracker as an MCP server for Claude Desktop"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["mcp>=2.2,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest", "anyio", "pytest-cov", "ruff"]
+
+[project.scripts]
+applylog = "applylog.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "S"]
+ignore = ["S101", "S608"]  # asserts in tests; S608 flags f-string SQL built only from hard-coded column/clause lists
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S"]
